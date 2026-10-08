@@ -1,3 +1,5 @@
+// Package main содержит сервер, который возвращает список кафе в виде строки,
+// в которой они разделены запятыми.
 package main
 
 import (
@@ -11,6 +13,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+// TestCafeNegative проверяет негативные сценарии - запросы, на которые сервер должен возвращать ошибку.
 func TestCafeNegative(t *testing.T) {
 	handler := http.HandlerFunc(mainHandle)
 
@@ -33,6 +36,7 @@ func TestCafeNegative(t *testing.T) {
 	}
 }
 
+// TestCafeWhenOk проверяет, что обработчик возвращает код ответа 200, когда все параметры запроса указаны верно.
 func TestCafeWhenOk(t *testing.T) {
 	handler := http.HandlerFunc(mainHandle)
 
@@ -51,6 +55,8 @@ func TestCafeWhenOk(t *testing.T) {
 	}
 }
 
+// TestCafeCount проверяет, что количество возвращенных кафе соответствует запрошенному.
+// Если запрошено больше, чем есть, сервер отдает не больше, чем у него есть.
 func TestCafeCount(t *testing.T) {
 	handler := http.HandlerFunc(mainHandle)
 	requests := []struct {
@@ -78,6 +84,8 @@ func TestCafeCount(t *testing.T) {
 	}
 }
 
+// TestCafeSearch проверяет, что в названии кафе содержится искомая строка,
+// и количество найденных кафе совпадает с ожиданиями.
 func TestCafeSearch(t *testing.T) {
 	handler := http.HandlerFunc(mainHandle)
 	requests := []struct {
